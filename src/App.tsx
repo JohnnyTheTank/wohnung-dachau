@@ -190,7 +190,7 @@ const styles: Record<string, React.CSSProperties> = {
     top: '100%',
     left: 0,
     width: '100%',
-    background: 'var(--bg-glass)',
+    background: 'var(--bg-mobile-menu)',
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
     borderBottom: '1px solid var(--border-color)',

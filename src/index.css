@@ -5,6 +5,7 @@
   --bg-primary: #fcfbfa;
   --bg-secondary: #f5f4ef;
   --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-mobile-menu: rgba(252, 251, 250, 0.98);
   --border-color: rgba(191, 161, 95, 0.15);
   --border-focus: rgba(191, 161, 95, 0.4);
   
@@ -39,6 +40,7 @@
   background-color: var(--bg-primary);
   
   scroll-behavior: smooth;
+  scroll-padding-top: 24px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -49,6 +51,7 @@
     --bg-primary: #0a0b0d;
     --bg-secondary: #12141a;
     --bg-glass: rgba(18, 20, 26, 0.75);
+    --bg-mobile-menu: rgba(18, 20, 26, 0.98);
     --border-color: rgba(217, 184, 108, 0.15);
     --border-focus: rgba(217, 184, 108, 0.4);
     
@@ -128,6 +131,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  :root {
+    scroll-padding-top: 24px;
+  }
   .section {
     padding: 60px 16px;
   }
@@ -225,7 +231,7 @@ h1, h2, h3, h4, h5, h6 {
 .key-fact-icon-wrapper {
   display: inline-flex;
   align-items: center;
-  justifyContent: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   border-radius: 12px;
@@ -503,11 +509,10 @@ textarea.form-control {
 }
 
 .gallery-grid {
-  display: grid;
+  display: flex !important;
+  flex-wrap: wrap !important;
   width: 100% !important;
   max-width: 100% !important;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-auto-rows: 280px;
   gap: 4px !important; /* Elegant hairline gap for seamless mosaic */
   margin-top: 40px;
 }
@@ -519,41 +524,33 @@ textarea.form-control {
   box-shadow: none !important;
   border: none !important;
   cursor: pointer;
-}
-
-.gallery-grid-item-large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-@media (max-width: 900px) {
-  .gallery-grid-item-large {
-    grid-column: span 1 !important;
-    grid-row: span 1 !important;
-  }
+  height: 280px !important;
+  flex: 1 1 280px !important;
 }
 
 .lightbox-viewport {
-  padding: 20px 100px;
+  padding: 20px 40px;
   box-sizing: border-box;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .lightbox-viewport {
-    padding: 15px 60px;
+    padding: 15px 20px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .lightbox-viewport {
     padding: 10px 0;
   }
 }
 
 .lightbox-img {
+  width: 100% !important;
+  height: 100% !important;
   max-width: 100% !important;
   max-height: 100% !important;
-  object-fit: contain;
+  object-fit: contain !important;
   transition: transform 0.25s ease-out;
   user-select: none;
   pointer-events: auto;
@@ -591,18 +588,20 @@ textarea.form-control {
 
 @media (max-width: 600px) {
   .gallery-grid {
-    grid-template-columns: 1fr !important;
-    grid-auto-rows: 260px !important; /* Beautiful tall images on mobile */
+    display: flex !important;
+    flex-wrap: wrap !important;
     gap: 2px !important; /* Very fine separator on mobile */
+  }
+  
+  .gallery-grid-item {
+    flex: 1 1 100% !important;
+    height: 260px !important;
   }
   
   /* Lightbox full-width images on mobile */
   .lightbox-img {
-    width: auto !important;
-    height: auto !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-    object-fit: contain !important;
+    width: 100% !important;
+    height: 100% !important;
   }
   
   .lightbox-thumbs-strip {

@@ -184,12 +184,12 @@ export const Gallery: React.FC = () => {
         </button>
       </div>
 
-      {/* Grid Display (showing up to 10 of filtered images first, with elegant hover) */}
+      {/* Grid Display (showing all filtered images with elegant hover) */}
       <div className="gallery-grid" style={styles.grid}>
-        {filteredImages.slice(0, 10).map((img, idx) => (
+        {filteredImages.map((img) => (
           <div 
             key={img.url} 
-            className={idx === 0 || idx === 3 ? "gallery-grid-item gallery-grid-item-large" : "gallery-grid-item"}
+            className="gallery-grid-item"
             style={styles.gridItem}
             onClick={() => openLightbox(img.url)}
           >
@@ -208,15 +208,6 @@ export const Gallery: React.FC = () => {
           </div>
         ))}
       </div>
-
-      {/* Show more action card if there are more than 10 images */}
-      {filteredImages.length > 10 && (
-        <div className="more-action-container" style={styles.moreActionContainer}>
-          <button className="btn btn-primary" onClick={() => openLightbox(filteredImages[10]?.url || filteredImages[0].url)}>
-            Alle {filteredImages.length} Fotos in Galerie ansehen
-          </button>
-        </div>
-      )}
 
       {/* Full screen Lightbox Modal */}
       {lightboxIndex !== null && (
@@ -385,27 +376,17 @@ const styles: Record<string, React.CSSProperties> = {
     color: '#12141a'
   },
   grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gridAutoRows: '240px',
-    gap: '16px',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '4px',
   },
   gridItem: {
     position: 'relative',
     overflow: 'hidden',
-    borderRadius: 'var(--border-radius-md)',
-    boxShadow: 'var(--shadow-sm)',
     cursor: 'pointer',
-    border: '1px solid var(--border-color)',
+    height: '280px',
+    flex: '1 1 280px',
   },
-  gridItemLarge: {
-    gridColumn: 'span 2',
-    gridRow: 'span 2',
-    '@media (max-width: 600px)': {
-      gridColumn: 'span 1',
-      gridRow: 'span 1'
-    }
-  } as any,
   gridImg: {
     width: '100%',
     height: '100%',
@@ -521,8 +502,9 @@ const styles: Record<string, React.CSSProperties> = {
     zIndex: 5,
   },
   lbViewport: {
-    flexGrow: 1,
+    flex: '1 1 0%',
     width: '100%',
+    minHeight: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -530,6 +512,8 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'relative'
   },
   lbImg: {
+    width: '100%',
+    height: '100%',
     maxHeight: '100%',
     maxWidth: '100%',
     objectFit: 'contain',
