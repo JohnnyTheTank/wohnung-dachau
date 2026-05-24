@@ -37,7 +37,7 @@ export const KeyFacts: React.FC = () => {
       icon: <Star size={24} style={styles.icon} />,
       label: 'Sanierungsstand',
       value: 'Neu saniert (2023/24)',
-      desc: 'Hochwertiger, moderner Vinylboden verlegt, Wände frisch aufbereitet'
+      desc: 'Hochwertiger, moderner Vinylboden verlegt, Bäder erneuert.'
     },
     {
       icon: <Utensils size={24} style={styles.icon} />,
