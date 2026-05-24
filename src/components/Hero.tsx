@@ -41,22 +41,22 @@ export const Hero: React.FC = () => {
 
       {/* Main minimal and elegant hero overlay */}
       <div className="animate-fade-in-up" style={styles.content}>
-        <div style={styles.badge}>
+        <div className="hero-badge" style={styles.badge}>
           <Sparkles size={14} style={{ color: 'var(--accent-gold)' }} />
-          <span>FRISCH SANIERTE WOHNUNG ZUR VERMIETUNG</span>
+          <span>TEILSANIERTE WOHNUNG ZUR VERMIETUNG</span>
         </div>
 
-        <h1 className="serif-heading" style={styles.title}>
+        <h1 className="serif-heading hero-title" style={styles.title}>
           Modernes Wohnglück<br />
           <span style={styles.goldText}>am Udldinger Hang</span>
         </h1>
 
-        <div style={styles.location}>
+        <div className="hero-location" style={styles.location}>
           <MapPin size={18} style={{ color: 'var(--accent-gold)' }} />
           <span>Richard-Strauß-Weg 6, 85221 Dachau</span>
         </div>
 
-        <div style={styles.actions}>
+        <div className="hero-actions" style={styles.actions}>
           <a href="#gallery" className="btn btn-primary" style={styles.ctaBtn}>
             Galerie ansehen
           </a>
@@ -64,7 +64,7 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* Elegant, interactive slideshow dot navigation */}
-      <div style={styles.dotsContainer}>
+      <div className="hero-dots" style={styles.dotsContainer}>
         {heroImages.map((_, idx) => (
           <button
             key={idx}
@@ -80,7 +80,7 @@ export const Hero: React.FC = () => {
       </div>
 
       <div style={styles.scrollDown} onClick={scrollToNext}>
-        <span>Entdecken Sie Ihr neues Zuhause</span>
+        <span className="hero-scroll-text">Entdecken Sie Ihr neues Zuhause</span>
         <ChevronDown size={24} style={styles.chevron} />
       </div>
     </section>

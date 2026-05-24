@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Hero } from './components/Hero';
 import { KeyFacts } from './components/KeyFacts';
-import { Features } from './components/Features';
 import { Pricing } from './components/Pricing';
 import { Gallery } from './components/Gallery';
 import { Floorplan } from './components/Floorplan';
@@ -11,26 +10,37 @@ import { Building2, Menu, X } from 'lucide-react';
 
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isBelowHero, setIsBelowHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 50);
+
+      // Check if scrolled past the hero section (which occupies 100vh)
+      // Guard against initial loading state where window.innerHeight might be 0/NaN
+      // and ensure isBelowHero is false at the absolute top of the page.
+      const threshold = (window.innerHeight || 800) - 80;
+      if (scrollY > 100 && scrollY >= threshold) {
+        setIsBelowHero(true);
       } else {
-        setIsScrolled(false);
+        setIsBelowHero(false);
       }
     };
+
     window.addEventListener('scroll', handleScroll);
+    // Call once initially to set correct state if refreshed mid-page
+    handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navItems = [
+    { label: 'Grundriss', href: '#floorplan' },
     { label: 'Eckdaten', href: '#key-facts' },
     { label: 'Galerie', href: '#gallery' },
-    { label: 'Ausstattung', href: '#features' },
     { label: 'Mietkonditionen', href: '#pricing' },
-    { label: 'Grundriss', href: '#floorplan' },
     { label: 'Lage', href: '#location' },
     { label: 'Energie', href: '#technical' }
   ];
@@ -39,6 +49,7 @@ const App: React.FC = () => {
     <div style={styles.appContainer}>
       {/* Premium Sticky Navigation Bar */}
       <header 
+        className={`premium-header ${isScrolled ? 'scrolled' : ''} ${isBelowHero ? 'below-hero' : ''}`}
         style={{ 
           ...styles.header, 
           ...(isScrolled ? styles.headerScrolled : {}) 
@@ -90,11 +101,10 @@ const App: React.FC = () => {
       {/* Main Page Layout Sections */}
       <main>
         <Hero />
+        <Floorplan />
         <KeyFacts />
         <Gallery />
-        <Features />
         <Pricing />
-        <Floorplan />
         <Location />
         <EnergyTechnical />
         {/* <Contact /> */}

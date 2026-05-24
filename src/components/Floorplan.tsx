@@ -4,19 +4,6 @@ import { Eye, Download, Maximize2 } from 'lucide-react';
 export const Floorplan: React.FC = () => {
   const [showFullPlan, setShowFullPlan] = useState(false);
 
-  const rooms = [
-    { name: 'Wohn- & Essbereich (inkl. Essecke)', size: '24,14 m²' },
-    { name: 'Schlafzimmer', size: '15,10 m²' },
-    { name: 'Kinder- / Arbeitszimmer', size: '10,94 m²' },
-    { name: 'Separate Küche (inkl. Einbauküche)', size: '7,76 m²' },
-    { name: 'Badezimmer (mit Badewanne & Fenster)', size: '5,78 m²' },
-    { name: 'Diele / Garderobe', size: '4,81 m²' },
-    { name: 'Abstellraum', size: '0,73 m²' },
-    { name: 'Separates Gäste-WC', size: '1,85 m²' },
-    { name: 'Süd-Balkon (überdacht, zur Hälfte angerechnet)', size: '3,67 m² (7,34 m² Grundfläche)' },
-    { name: 'Wohnfläche Gesamt', size: '70,1 m²', isTotal: true }
-  ];
-
   return (
     <section id="floorplan" className="section" style={styles.section}>
       <div style={styles.header}>
@@ -25,38 +12,20 @@ export const Floorplan: React.FC = () => {
         <div style={styles.divider} />
       </div>
 
-      <div className="responsive-grid-floorplan" style={styles.container}>
-        {/* Left Side: Room list table */}
-        <div className="glass-card" style={styles.tableCard}>
-          <h3 style={styles.cardTitle}>Flächenberechnung</h3>
-          <p style={styles.cardDesc}>
-            Dank des perfekten Schnitts der Wohnung wird jeder Quadratmeter optimal genutzt. Der getrennte Wohn- und Schlafbereich sorgt für ein ruhiges Wohngefühl.
-          </p>
-          <div className="floorplan-table">
-            {rooms.map((room, idx) => (
-              <div 
-                key={idx} 
-                className={`floorplan-row ${room.isTotal ? 'total-row' : ''}`}
-                style={{ 
-                  borderBottom: idx === rooms.length - 1 ? 'none' : '1px solid var(--border-color)' 
-                }}
-              >
-                <span className={`floorplan-name ${room.isTotal ? 'total-name' : ''}`}>{room.name}</span>
-                <span className={`floorplan-size ${room.isTotal ? 'total-size' : ''}`}>{room.size}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Side: Floor plan display with hover effect & lightbox trigger */}
-        <div className="glass-card" style={styles.planCard}>
-          <div style={styles.imgWrapper} onClick={() => setShowFullPlan(true)}>
+      <div style={styles.container}>
+        {/* Centered Floor plan display card with hover effect & lightbox trigger */}
+        <div className="glass-card plan-card" style={styles.planCard}>
+          <div 
+            className="plan-image-container" 
+            style={styles.imgWrapper} 
+            onClick={() => setShowFullPlan(true)}
+          >
             <img 
               src={`${import.meta.env.BASE_URL}images/grundriss_2x.webp`} 
               alt="Wohnungsgrundriss Dachau" 
               style={styles.planImg} 
             />
-            <div style={styles.planOverlay}>
+            <div className="plan-overlay-trigger" style={styles.planOverlay}>
               <div style={styles.zoomCircle}>
                 <Maximize2 size={24} style={{ color: 'var(--accent-gold)' }} />
               </div>
@@ -68,7 +37,12 @@ export const Floorplan: React.FC = () => {
               <Eye size={18} />
               <span>Vollbild anzeigen</span>
             </button>
-            <a href={`${import.meta.env.BASE_URL}images/grundriss.png`} download="Grundriss_Udldinger_Hang.png" className="btn btn-secondary" style={styles.footerBtn}>
+            <a 
+              href={`${import.meta.env.BASE_URL}images/grundriss.png`} 
+              download="Grundriss_Udldinger_Hang.png" 
+              className="btn btn-secondary" 
+              style={styles.footerBtn}
+            >
               <Download size={18} />
               <span>Herunterladen</span>
             </a>
@@ -127,36 +101,23 @@ const styles: Record<string, React.CSSProperties> = {
     marginTop: '8px',
     borderRadius: '2px'
   },
-  container: {},
-  tableCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '18px',
-    textAlign: 'left'
-  },
-  cardTitle: {
-    fontSize: '22px',
-    fontWeight: 600,
-    color: 'var(--text-primary)',
-    margin: 0
-  },
-  cardDesc: {
-    fontSize: '14.5px',
-    lineHeight: '1.6',
-    color: 'var(--text-secondary)',
-    margin: 0
+  container: {
+    maxWidth: '650px',
+    margin: '0 auto',
+    width: '100%',
   },
   planCard: {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
     background: 'var(--bg-glass)',
-    padding: '24px'
+    padding: '24px',
+    width: '100%',
   },
   imgWrapper: {
     position: 'relative',
-    background: '#f2eded',
-    padding: '12px',
+    background: '#ffffff',
+    padding: '20px',
     borderRadius: 'var(--border-radius-sm)',
     border: '1px solid var(--border-color)',
     cursor: 'pointer',
@@ -169,7 +130,7 @@ const styles: Record<string, React.CSSProperties> = {
   planImg: {
     width: '100%',
     height: 'auto',
-    maxHeight: '480px',
+    maxHeight: '520px',
     objectFit: 'contain',
     display: 'block'
   },
@@ -260,11 +221,11 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: 'auto'
   },
   lbImg: {
-    maxHeight: '80vh',
-    maxWidth: '90vw',
+    maxHeight: '100%',
+    maxWidth: '100%',
     objectFit: 'contain',
-    background: '#f2eded',
-    padding: '16px',
+    background: '#ffffff',
+    padding: '20px',
     borderRadius: '8px'
   }
 };
@@ -273,8 +234,8 @@ const styles: Record<string, React.CSSProperties> = {
 if (typeof document !== 'undefined') {
   const style = document.createElement('style');
   style.innerHTML = `
-    #floorplan .glass-card:hover .planOverlay_hover_trigger {
-      /* Handled inside hover styles */
+    .plan-image-container:hover .plan-overlay-trigger {
+      opacity: 1 !important;
     }
   `;
   document.head.appendChild(style);

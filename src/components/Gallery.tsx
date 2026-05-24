@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Maximize2, Play, Pause, ZoomIn, ZoomOut } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Maximize2, ZoomIn, ZoomOut, Download } from 'lucide-react';
 
 interface GalleryImage {
   url: string;
@@ -40,7 +40,6 @@ const images: GalleryImage[] = [
 export const Gallery: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'living' | 'kitchen' | 'bathroom' | 'outdoor'>('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [zoomScale, setZoomScale] = useState(1);
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
@@ -49,18 +48,6 @@ export const Gallery: React.FC = () => {
   const filteredImages = selectedFilter === 'all' 
     ? images 
     : images.filter(img => img.category === selectedFilter);
-
-  // Autoplay handler
-  useEffect(() => {
-    let timer: any;
-    if (isPlaying && lightboxIndex !== null) {
-      timer = setInterval(() => {
-        setLightboxIndex((prev) => (prev !== null ? (prev + 1) % images.length : null));
-        setZoomScale(1);
-      }, 4000);
-    }
-    return () => clearInterval(timer);
-  }, [isPlaying, lightboxIndex]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -83,7 +70,6 @@ export const Gallery: React.FC = () => {
 
   const closeLightbox = () => {
     setLightboxIndex(null);
-    setIsPlaying(false);
     setZoomScale(1);
     document.body.style.overflow = '';
   };
@@ -126,7 +112,30 @@ export const Gallery: React.FC = () => {
     e.stopPropagation();
   };
 
-  const togglePlay = () => setIsPlaying(!isPlaying);
+  const downloadImage = async () => {
+    if (lightboxIndex === null) return;
+    const imgUrl = images[lightboxIndex].url;
+    const fullUrl = `${import.meta.env.BASE_URL}${imgUrl.startsWith('/') ? imgUrl.substring(1) : imgUrl}`;
+    
+    try {
+      const response = await fetch(fullUrl);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Failed to download image", error);
+      // Fallback: open in new tab if fetching fails
+      window.open(fullUrl, '_blank');
+    }
+  };
+
   const zoomIn = () => setZoomScale(prev => Math.min(prev + 0.3, 3));
   const zoomOut = () => setZoomScale(prev => Math.max(prev - 0.3, 1));
 
@@ -136,7 +145,7 @@ export const Gallery: React.FC = () => {
         <span style={styles.tag}>FOTOGALERIE</span>
         <h2 className="serif-heading" style={styles.title}>Einblicke in Ihr neues Zuhause</h2>
         <p style={styles.subtitle}>
-          Verschaffen Sie sich einen Eindruck von den frisch sanierten Wohnräumen, der hochwertigen Einbauküche und dem traumhaften Blick vom Balkon.
+          Verschaffen Sie sich einen Eindruck von den frisch teilsanierten Wohnräumen, der hochwertigen Einbauküche und dem traumhaften Blick vom Balkon.
         </p>
         <div style={styles.divider} />
       </div>
@@ -231,8 +240,8 @@ export const Gallery: React.FC = () => {
             </div>
 
             <div style={styles.lbControls}>
-              <button style={styles.lbControlBtn} onClick={togglePlay} title={isPlaying ? 'Pausieren' : 'Diashow starten'}>
-                {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+              <button style={styles.lbControlBtn} onClick={downloadImage} title="Bild herunterladen">
+                <Download size={20} />
               </button>
               <button style={styles.lbControlBtn} onClick={zoomIn} title="Vergrößern">
                 <ZoomIn size={20} />
@@ -260,7 +269,7 @@ export const Gallery: React.FC = () => {
           </button>
 
           {/* Main Image Viewport */}
-          <div style={styles.lbViewport} onClick={closeLightbox}>
+          <div className="lightbox-viewport" style={styles.lbViewport} onClick={closeLightbox}>
             <img 
               className="lightbox-img"
               src={getWebPUrl(images[lightboxIndex].url, '3x')} 
@@ -521,8 +530,8 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'relative'
   },
   lbImg: {
-    maxHeight: '75vh',
-    maxWidth: '90%',
+    maxHeight: '100%',
+    maxWidth: '100%',
     objectFit: 'contain',
     transition: 'transform 0.25s ease-out',
     userSelect: 'none',

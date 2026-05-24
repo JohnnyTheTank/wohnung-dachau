@@ -1,52 +1,58 @@
 import React from 'react';
-import { Maximize2, Compass, Home, Calendar, Star, CalendarCheck, Utensils, Car } from 'lucide-react';
+import { Maximize2, Compass, Home, Calendar, Star, CalendarCheck, Utensils, Car, Archive } from 'lucide-react';
 
 export const KeyFacts: React.FC = () => {
   const facts = [
     {
-      icon: <Maximize2 size={24} style={styles.icon} />,
+      icon: <Maximize2 className="key-fact-icon" />,
       label: 'Wohnfläche',
       value: '70,1 m²',
-      desc: 'Großzügige Raumaufteilung (aktualisierte Fläche entgegen Alt-Exposé)'
+      desc: 'Großzügige Raumaufteilung'
     },
     {
-      icon: <Home size={24} style={styles.icon} />,
+      icon: <Home className="key-fact-icon" />,
       label: 'Zimmer',
       value: '3 Zimmer',
       desc: 'Lichtdurchfluteter Wohnbereich mit Ess-Ecke, Schlafzimmer & Kinder-/Arbeitszimmer'
     },
     {
-      icon: <Compass size={24} style={styles.icon} />,
+      icon: <Compass className="key-fact-icon" />,
       label: 'Stockwerk & Lage',
       value: '1. OG (Eckwohnung)',
       desc: 'Sehr helle und ruhige Lage, ca. 80 Meter von der nächsten befahrenen Straße entfernt'
     },
     {
-      icon: <CalendarCheck size={24} style={styles.icon} />,
+      icon: <CalendarCheck className="key-fact-icon" />,
       label: 'Bezugstermin',
       value: 'Ab 1. September 2026',
-      desc: 'Bezugsfertig saniert und bezugsbereit für Ihren Einzug'
+      desc: 'Teilsaniert und bezugsbereit für Ihren Einzug'
     },
     {
-      icon: <Calendar size={24} style={styles.icon} />,
+      icon: <Calendar className="key-fact-icon" />,
       label: 'Baujahr',
       value: '1988 (Wärmeerzeuger 2012)',
       desc: 'Solide Bausubstanz, fortlaufend instand gehalten und modernisiert'
     },
     {
-      icon: <Star size={24} style={styles.icon} />,
+      icon: <Star className="key-fact-icon" />,
       label: 'Sanierungsstand',
-      value: 'Neu saniert (2023/24)',
+      value: 'Teilsaniert (2023/24)',
       desc: 'Hochwertiger, moderner Vinylboden verlegt, Bäder erneuert.'
     },
     {
-      icon: <Utensils size={24} style={styles.icon} />,
+      icon: <Utensils className="key-fact-icon" />,
       label: 'Küche',
       value: 'Einbauküche',
-      desc: 'Voll ausgestattete Einbauküche inklusive plus großes, trockenes Kellerabteil'
+      desc: 'Voll ausgestattete Einbauküche bereits im Mietpreis enthalten'
     },
     {
-      icon: <Car size={24} style={styles.icon} />,
+      icon: <Archive className="key-fact-icon" />,
+      label: 'Kellerabteil',
+      value: 'Kellerabteil',
+      desc: 'Großes, trockenes Kellerabteil bietet reichlich zusätzlichen Stauraum'
+    },
+    {
+      icon: <Car className="key-fact-icon" />,
       label: 'Stellplatz',
       value: 'Tiefgarage',
       desc: 'Eigener, sicherer Einzelstellplatz direkt im Haus (bequem erreichbar)'
@@ -63,13 +69,13 @@ export const KeyFacts: React.FC = () => {
 
       <div className="features-grid">
         {facts.map((fact, idx) => (
-          <div key={idx} className="glass-card" style={styles.card}>
-            <div style={styles.iconWrapper}>
+          <div key={idx} className="glass-card key-fact-card">
+            <div className="key-fact-icon-wrapper">
               {fact.icon}
             </div>
-            <span style={styles.cardLabel}>{fact.label}</span>
-            <h3 style={styles.cardValue}>{fact.value}</h3>
-            <p style={styles.cardDesc}>{fact.desc}</p>
+            <span className="key-fact-label">{fact.label}</span>
+            <h3 className="key-fact-value">{fact.value}</h3>
+            <p className="key-fact-desc">{fact.desc}</p>
           </div>
         ))}
       </div>
@@ -106,45 +112,5 @@ const styles: Record<string, React.CSSProperties> = {
     background: 'var(--accent-gold)',
     marginTop: '8px',
     borderRadius: '2px'
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: '12px',
-    textAlign: 'left',
-    height: '100%'
-  },
-  iconWrapper: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '48px',
-    height: '48px',
-    borderRadius: '12px',
-    background: 'var(--accent-gold-light)',
-    marginBottom: '8px'
-  },
-  icon: {
-    color: 'var(--accent-gold)'
-  },
-  cardLabel: {
-    fontSize: '12px',
-    fontWeight: 600,
-    letterSpacing: '0.05em',
-    color: 'var(--text-muted)',
-    textTransform: 'uppercase'
-  },
-  cardValue: {
-    fontSize: '20px',
-    fontWeight: 600,
-    color: 'var(--text-primary)',
-    margin: 0
-  },
-  cardDesc: {
-    fontSize: '14px',
-    lineHeight: '1.5',
-    color: 'var(--text-secondary)',
-    margin: 0
   }
 };

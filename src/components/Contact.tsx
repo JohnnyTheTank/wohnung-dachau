@@ -42,7 +42,7 @@ export const Contact: React.FC = () => {
 
     const body = `Sehr geehrte Vermieter,
 
-hiermit bekunde ich mein Interesse an der sanierten 3-Zimmer-Wohnung im Richard-Strauß-Weg 6 in Dachau.
+hiermit bekunde ich mein Interesse an der teilsanierten 3-Zimmer-Wohnung im Richard-Strauß-Weg 6 in Dachau.
 
 Hier sind meine Bewerberdaten:
 --------------------------------------------------

@@ -5,8 +5,8 @@ export const Features: React.FC = () => {
   const listItems = [
     {
       icon: <Layers size={24} style={styles.icon} />,
-      title: 'Frisch saniert & moderner Vinylboden',
-      desc: 'Die Wohnung wurde kürzlich umfassend modernisiert. Der neue, edle Vinylboden in Holzoptik verleiht allen Wohnräumen eine warme, zeitgemäße Atmosphäre und ist besonders pflegeleicht und strapazierfähig.'
+      title: 'Frisch teilsaniert & moderner Vinylboden',
+      desc: 'Die Wohnung wurde kürzlich teilmodernisiert. Der neue, edle Vinylboden in Holzoptik verleiht allen Wohnräumen eine warme, zeitgemäße Atmosphäre und ist besonders pflegeleicht und strapazierfähig.'
     },
     {
       icon: <Flame size={24} style={styles.icon} />,
