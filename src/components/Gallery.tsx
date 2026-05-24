@@ -20,7 +20,6 @@ const images: GalleryImage[] = [
   { url: '/images/7b40747f-0d0f-4d0c-9328-e15c5167cd9b.JPG', title: 'Lichtdurchfluteter Essecke für die Familie', category: 'living' },
   { url: '/images/90bb765f-e08b-4605-8642-c3485e1296f4.JPG', title: 'Helles Wohnzimmer mit Wohlfühl-Atmosphäre', category: 'living' },
   { url: '/images/9f1e2436-1d84-4145-9feb-f68dc2c9838e.JPG', title: 'Helles Wohnzimmer mit Wohlfühl-Atmosphäre', category: 'living' },
-  { url: '/images/25247a78-def0-4dd1-ae0f-7d3e776d679b.JPG', title: 'Gemütliches Schlafzimmer', category: 'living' },
   { url: '/images/616dd408-ab9d-4faf-b599-b51a2f2abf86.JPG', title: 'Gemütliches Schlafzimmer', category: 'living' },
   { url: '/images/d4ae2014-3593-4f73-81df-eaf061d0050a.JPG', title: 'Flexibles Arbeits- & Kinderzimmer', category: 'living' },
 
@@ -32,7 +31,6 @@ const images: GalleryImage[] = [
   // Badezimmer (bathroom)
   { url: '/images/69f55939-6c63-490f-bddc-c2b5684d7916.JPG', title: 'Badewanne mit Duschbereich & Tageslicht', category: 'bathroom' },
   { url: '/images/b52503f2-bdc2-4b72-85e2-f2ee6cd1952c.JPG', title: 'Badewanne mit Duschbereich & Tageslicht', category: 'bathroom' },
-  { url: '/images/8ba89b93-0de1-4735-89a4-6eeb7a97be03.JPG', title: 'Separates Gäste-WC', category: 'bathroom' },
   { url: '/images/f34dcf2a-43ed-4c23-b656-eab0267d8970.JPG', title: 'Separates Gäste-WC', category: 'bathroom' },
 
   // Balkon & Außenbereich (outdoor)
