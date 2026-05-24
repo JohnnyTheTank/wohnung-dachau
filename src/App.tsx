@@ -7,7 +7,6 @@ import { Gallery } from './components/Gallery';
 import { Floorplan } from './components/Floorplan';
 import { Location } from './components/Location';
 import { EnergyTechnical } from './components/EnergyTechnical';
-import { Contact } from './components/Contact';
 import { Building2, Menu, X } from 'lucide-react';
 
 const App: React.FC = () => {
