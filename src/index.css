@@ -844,17 +844,16 @@ textarea.form-control {
   }
 }
 
-/* Mobile responsive styles to hide non-essential hero elements */
-@media (max-width: 768px) {
-  .hero-badge,
-  .hero-title,
-  .hero-location,
-  .hero-dots,
-  .hero-scroll-text {
-    display: none !important;
-  }
-
-  .hero-actions {
-    transform: translateY(240px);
-  }
+/* Simplified startpage styling: display only the gallery button and the scroll indicator arrow on all screens */
+.hero-badge,
+.hero-title,
+.hero-location,
+.hero-dots,
+.hero-scroll-text {
+  display: none !important;
 }
+
+.hero-actions {
+  transform: translateY(300px);
+}
+
