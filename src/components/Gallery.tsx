@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize2, ZoomIn, ZoomOut, Download } from 'lucide-react';
 
 interface GalleryImage {
@@ -15,25 +15,33 @@ const getWebPUrl = (jpgUrl: string, size?: '1x' | '2x' | '3x') => {
 };
 
 const images: GalleryImage[] = [
-  { url: '/images/13aa8e10-884e-4c89-834d-d8c426283d91.JPG', title: 'Moderner Wohn- & Essbereich', category: 'living' },
-  { url: '/images/5ce46b82-a4cb-4f14-b19b-93e096c36471.JPG', title: 'Lichtdurchflutetes Wohnzimmer', category: 'living' },
-  { url: '/images/25247a78-def0-4dd1-ae0f-7d3e776d679b.JPG', title: 'Vollausgestattete Einbauküche', category: 'kitchen' },
-  { url: '/images/b52503f2-bdc2-4b72-85e2-f2ee6cd1952c.JPG', title: 'Ruhiger, überdachter Süd-Balkon', category: 'outdoor' },
-  { url: '/images/1995c338-45c1-415a-8b0b-af3161115a4d.JPG', title: 'Wohnbereich Detailansicht', category: 'living' },
-  { url: '/images/1f8f0fca-d3dc-405a-b80a-bc98f3b80a88.JPG', title: 'Flur & Garderobenbereich', category: 'general' },
-  { url: '/images/52271d39-d192-40a3-9ce2-709a3dee98af.JPG', title: 'Helle Diele / Eingang', category: 'general' },
-  { url: '/images/5b2f09f3-8168-4777-89b5-ac5bebfd28ab.JPG', title: 'Tageslichtbad mit Badewanne', category: 'bathroom' },
-  { url: '/images/616dd408-ab9d-4faf-b599-b51a2f2abf86.JPG', title: 'Separates Gäste-WC', category: 'bathroom' },
-  { url: '/images/69f55939-6c63-490f-bddc-c2b5684d7916.JPG', title: 'Schlafzimmer / Kinderzimmer', category: 'living' },
-  { url: '/images/6dd85c35-50a8-4a55-af60-0479f66b3b3f.JPG', title: 'Schlafzimmer / Arbeitsbereich', category: 'living' },
-  { url: '/images/7b40747f-0d0f-4d0c-9328-e15c5167cd9b.JPG', title: 'Blick in den grünen Innenhof', category: 'outdoor' },
-  { url: '/images/8ba89b93-0de1-4735-89a4-6eeb7a97be03.JPG', title: 'Küchenzeile Nahaufnahme', category: 'kitchen' },
-  { url: '/images/8f9a87f0-58d6-499d-b834-4ad4d5424fd9.JPG', title: 'Balkon mit Sitzecke', category: 'outdoor' },
-  { url: '/images/90bb765f-e08b-4605-8642-c3485e1296f4.JPG', title: 'Badewannen-Bereich', category: 'bathroom' },
-  { url: '/images/9f1e2436-1d84-4145-9feb-f68dc2c9838e.JPG', title: 'Details Einbauküche', category: 'kitchen' },
-  { url: '/images/ab0dd1c1-4333-46ac-825a-214e348af35f.JPG', title: 'Wohnraum mit Vinylboden', category: 'living' },
-  { url: '/images/d4ae2014-3593-4f73-81df-eaf061d0050a.JPG', title: 'Balkonaussicht ins Grüne', category: 'outdoor' },
-  { url: '/images/f34dcf2a-43ed-4c23-b656-eab0267d8970.JPG', title: 'Zimmer mit Aussicht', category: 'living' },
+  // Wohn- & Schlafräume (living)
+  { url: '/images/5b2f09f3-8168-4777-89b5-ac5bebfd28ab.JPG', title: 'Lichtdurchfluteter Essecke für die Familie', category: 'living' },
+  { url: '/images/7b40747f-0d0f-4d0c-9328-e15c5167cd9b.JPG', title: 'Lichtdurchfluteter Essecke für die Familie', category: 'living' },
+  { url: '/images/90bb765f-e08b-4605-8642-c3485e1296f4.JPG', title: 'Helles Wohnzimmer mit Wohlfühl-Atmosphäre', category: 'living' },
+  { url: '/images/9f1e2436-1d84-4145-9feb-f68dc2c9838e.JPG', title: 'Helles Wohnzimmer mit Wohlfühl-Atmosphäre', category: 'living' },
+  { url: '/images/25247a78-def0-4dd1-ae0f-7d3e776d679b.JPG', title: 'Gemütliches Schlafzimmer', category: 'living' },
+  { url: '/images/616dd408-ab9d-4faf-b599-b51a2f2abf86.JPG', title: 'Gemütliches Schlafzimmer', category: 'living' },
+  { url: '/images/d4ae2014-3593-4f73-81df-eaf061d0050a.JPG', title: 'Flexibles Arbeits- & Kinderzimmer', category: 'living' },
+
+  // Küche (kitchen)
+  { url: '/images/5ce46b82-a4cb-4f14-b19b-93e096c36471.JPG', title: 'Moderne Einbauküche', category: 'kitchen' },
+  { url: '/images/1f8f0fca-d3dc-405a-b80a-bc98f3b80a88.JPG', title: 'Moderne Einbauküche (Spülbereich)', category: 'kitchen' },
+  { url: '/images/ab0dd1c1-4333-46ac-825a-214e348af35f.JPG', title: 'Moderne Einbauküche', category: 'kitchen' },
+
+  // Badezimmer (bathroom)
+  { url: '/images/69f55939-6c63-490f-bddc-c2b5684d7916.JPG', title: 'Badewanne mit Duschbereich & Tageslicht', category: 'bathroom' },
+  { url: '/images/b52503f2-bdc2-4b72-85e2-f2ee6cd1952c.JPG', title: 'Badewanne mit Duschbereich & Tageslicht', category: 'bathroom' },
+  { url: '/images/8ba89b93-0de1-4735-89a4-6eeb7a97be03.JPG', title: 'Separates Gäste-WC', category: 'bathroom' },
+  { url: '/images/f34dcf2a-43ed-4c23-b656-eab0267d8970.JPG', title: 'Separates Gäste-WC', category: 'bathroom' },
+
+  // Balkon & Außenbereich (outdoor)
+  { url: '/images/52271d39-d192-40a3-9ce2-709a3dee98af.JPG', title: 'Ruhiger, überdachter Süd-Balkon', category: 'outdoor' },
+
+  // Flur & Grundriss (general / nur unter "Alle Bilder" sichtbar)
+  { url: '/images/13aa8e10-884e-4c89-834d-d8c426283d91.JPG', title: 'Heller Eingangsbereich & Flur', category: 'general' },
+  { url: '/images/1995c338-45c1-415a-8b0b-af3161115a4d.JPG', title: 'Heller Eingangsbereich & Flur', category: 'general' },
+  { url: '/images/8f9a87f0-58d6-499d-b834-4ad4d5424fd9.JPG', title: 'Heller Eingangsbereich & Flur', category: 'general' },
   { url: '/images/grundriss.png', title: 'Durchdachter Wohnungsgrundriss', category: 'general' }
 ];
 
@@ -49,6 +57,41 @@ export const Gallery: React.FC = () => {
     ? images 
     : images.filter(img => img.category === selectedFilter);
 
+  const closeLightbox = useCallback(() => {
+    setLightboxIndex(null);
+    setZoomScale(1);
+  }, []);
+
+  const nextImage = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % images.length : null));
+    setZoomScale(1);
+  }, [lightboxIndex]);
+
+  const prevImage = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : null));
+    setZoomScale(1);
+  }, [lightboxIndex]);
+
+  const openLightbox = (url: string) => {
+    const idx = images.findIndex(img => img.url === url);
+    setLightboxIndex(idx);
+    setZoomScale(1);
+  };
+
+  // Manage body scroll lock based on lightbox state
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [lightboxIndex]);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -59,32 +102,7 @@ export const Gallery: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex]);
-
-  const openLightbox = (url: string) => {
-    const idx = images.findIndex(img => img.url === url);
-    setLightboxIndex(idx);
-    setZoomScale(1);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeLightbox = () => {
-    setLightboxIndex(null);
-    setZoomScale(1);
-    document.body.style.overflow = '';
-  };
-
-  const nextImage = () => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % images.length : null));
-    setZoomScale(1);
-  };
-
-  const prevImage = () => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : null));
-    setZoomScale(1);
-  };
+  }, [lightboxIndex, closeLightbox, nextImage, prevImage]);
 
   // Touch handlers for swipe on mobile
   const handleTouchStart = (e: React.TouchEvent) => {

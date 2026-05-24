@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, Sparkles, MapPin } from 'lucide-react';
 
 const heroImages = [
-  `${import.meta.env.BASE_URL}images/13aa8e10-884e-4c89-834d-d8c426283d91_3x.webp`,
-  `${import.meta.env.BASE_URL}images/5ce46b82-a4cb-4f14-b19b-93e096c36471_3x.webp`,
-  `${import.meta.env.BASE_URL}images/25247a78-def0-4dd1-ae0f-7d3e776d679b_3x.webp`,
-  `${import.meta.env.BASE_URL}images/b52503f2-bdc2-4b72-85e2-f2ee6cd1952c_3x.webp`
+  `${import.meta.env.BASE_URL}images/1f8f0fca-d3dc-405a-b80a-bc98f3b80a88_3x.webp`,
+  `${import.meta.env.BASE_URL}images/6dd85c35-50a8-4a55-af60-0479f66b3b3f_3x.webp`,
+  `${import.meta.env.BASE_URL}images/8f9a87f0-58d6-499d-b834-4ad4d5424fd9_3x.webp`,
+  `${import.meta.env.BASE_URL}images/9f1e2436-1d84-4145-9feb-f68dc2c9838e_3x.webp`,
+  `${import.meta.env.BASE_URL}images/90bb765f-e08b-4605-8642-c3485e1296f4_3x.webp`,
+  `${import.meta.env.BASE_URL}images/52271d39-d192-40a3-9ce2-709a3dee98af_3x.webp`,
+  `${import.meta.env.BASE_URL}images/ab0dd1c1-4333-46ac-825a-214e348af35f_3x.webp`
 ];
 
 export const Hero: React.FC = () => {
