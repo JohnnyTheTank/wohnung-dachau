@@ -11,7 +11,7 @@ export const Pricing: React.FC = () => {
           <div style={styles.divider} />
         </div>
 
-        <div style={styles.container}>
+        <div className="responsive-grid-2col" style={styles.container}>
           {/* Main Financial breakdown card */}
           <div className="glass-card" style={styles.mainCard}>
             <div style={styles.mainCardHeader}>
@@ -21,22 +21,22 @@ export const Pricing: React.FC = () => {
 
             <div style={styles.kaltmieteHighlight}>
               <span style={styles.kaltmieteLabel}>Basis-Kaltmiete (inkl. Einbauküche)</span>
-              <span style={styles.kaltmieteValue}>1.425,00 €</span>
+              <span className="responsive-kaltmiete-value" style={styles.kaltmieteValue}>1.425,00 €</span>
             </div>
 
-            <div style={styles.priceBreakdown}>
-              <div style={styles.priceRow}>
-                <span style={styles.priceLabel}>Nebenkosten (Vorauszahlung)</span>
-                <span style={styles.priceValue}>+ 220,00 €</span>
+            <div className="price-breakdown">
+              <div className="price-row">
+                <span className="price-label">Nebenkosten (Vorauszahlung)</span>
+                <span className="price-value">+ 220,00 €</span>
               </div>
-              <div style={styles.priceRow}>
-                <span style={styles.priceLabel}>Tiefgaragen-Stellplatz (Einzelstellplatz)</span>
-                <span style={styles.priceValue}>+ 65,00 €</span>
+              <div className="price-row">
+                <span className="price-label">Tiefgaragen-Stellplatz (Einzelstellplatz)</span>
+                <span className="price-value">+ 65,00 €</span>
               </div>
               
-              <div style={styles.totalRow}>
-                <span style={styles.totalLabel}>Gesamtmiete (Warm)</span>
-                <span style={styles.totalValue}>1.710,00 €</span>
+              <div className="total-price-row">
+                <span className="total-price-label">Gesamtmiete (Warm)</span>
+                <span className="total-price-value">1.710,00 €</span>
               </div>
             </div>
 
@@ -101,12 +101,7 @@ export const Pricing: React.FC = () => {
 const styles: Record<string, React.CSSProperties> = {
   outerSection: {
     background: 'var(--bg-secondary)',
-    width: '100vw',
-    position: 'relative',
-    left: '50%',
-    right: '50%',
-    marginLeft: '-50vw',
-    marginRight: '-50vw',
+    width: '100%',
   },
   section: {
     maxWidth: '1200px',
@@ -138,16 +133,7 @@ const styles: Record<string, React.CSSProperties> = {
     marginTop: '8px',
     borderRadius: '2px'
   },
-  container: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)',
-    gap: '32px',
-    alignItems: 'start',
-    marginTop: '40px',
-    '@media (max-width: 900px)': {
-      gridTemplateColumns: '1fr',
-    }
-  } as any, // override type for media query in custom styles (resolved below)
+  container: {}, // override type for media query in custom styles (resolved below)
   mainCard: {
     display: 'flex',
     flexDirection: 'column',
@@ -173,37 +159,6 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '13px',
     fontWeight: 600,
   },
-  priceBreakdown: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-  },
-  priceRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: '16px',
-    borderBottom: '1px solid var(--border-color)',
-    fontSize: '15px',
-    color: 'var(--text-secondary)',
-  },
-  priceValue: {
-    fontWeight: 500,
-    color: 'var(--text-primary)',
-  },
-  totalRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: '8px',
-    fontSize: '18px',
-    fontWeight: 700,
-    color: 'var(--text-primary)',
-  },
-  totalValue: {
-    fontSize: '20px',
-    color: 'var(--text-primary)',
-  },
   kaltmieteHighlight: {
     background: 'var(--accent-gold-light)',
     border: '1px solid var(--border-color)',
@@ -224,7 +179,6 @@ const styles: Record<string, React.CSSProperties> = {
     letterSpacing: '0.08em',
   },
   kaltmieteValue: {
-    fontSize: '36px',
     fontWeight: 700,
     color: 'var(--accent-gold)',
     lineHeight: 1,

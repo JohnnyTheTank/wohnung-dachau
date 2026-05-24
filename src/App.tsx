@@ -27,9 +27,9 @@ const App: React.FC = () => {
 
   const navItems = [
     { label: 'Eckdaten', href: '#key-facts' },
+    { label: 'Galerie', href: '#gallery' },
     { label: 'Ausstattung', href: '#features' },
     { label: 'Mietkonditionen', href: '#pricing' },
-    { label: 'Galerie', href: '#gallery' },
     { label: 'Grundriss', href: '#floorplan' },
     { label: 'Lage', href: '#location' },
     { label: 'Energie', href: '#technical' }
@@ -47,11 +47,11 @@ const App: React.FC = () => {
         <div style={styles.navContainer}>
           <a href="#" style={styles.logo}>
             <Building2 size={24} style={{ color: 'var(--accent-gold)' }} />
-            <span style={styles.logoText}>Udldinger Hang</span>
+            <span style={styles.logoText}>Wohnung in Dachau</span>
           </a>
 
           {/* Desktop Nav */}
-          <nav style={styles.desktopNav}>
+          <nav className="desktop-nav" style={styles.desktopNav}>
             {navItems.map((item) => (
               <a key={item.label} href={item.href} style={styles.navLink}>
                 {item.label}
@@ -61,6 +61,7 @@ const App: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button 
+            className="mobile-menu-btn"
             style={styles.mobileMenuBtn} 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Menü öffnen"
@@ -90,9 +91,9 @@ const App: React.FC = () => {
       <main>
         <Hero />
         <KeyFacts />
+        <Gallery />
         <Features />
         <Pricing />
-        <Gallery />
         <Floorplan />
         <Location />
         <EnergyTechnical />
@@ -159,13 +160,7 @@ const styles: Record<string, React.CSSProperties> = {
     letterSpacing: '-0.02em',
     color: 'var(--text-primary)',
   },
-  desktopNav: {
-    display: 'flex',
-    gap: '24px',
-    '@media (max-width: 900px)': {
-      display: 'none',
-    }
-  } as any,
+  desktopNav: {},
   navLink: {
     fontSize: '14.5px',
     fontWeight: 500,
@@ -178,12 +173,8 @@ const styles: Record<string, React.CSSProperties> = {
     border: 'none',
     color: 'var(--text-primary)',
     cursor: 'pointer',
-    display: 'none',
     padding: '8px',
-    '@media (max-width: 900px)': {
-      display: 'block',
-    }
-  } as any,
+  },
   mobileNav: {
     position: 'absolute',
     top: '100%',

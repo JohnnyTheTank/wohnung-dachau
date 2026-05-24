@@ -298,3 +298,409 @@ textarea.form-control {
     filter: invert(90%) hue-rotate(180deg) grayscale(20%) contrast(90%);
   }
 }
+
+/* ==========================================================================
+   Responsive Utilities & Layout Adjustments for Mobile Optimizations
+   ========================================================================== */
+
+/* Responsive 2-column grids for Pricing & EnergyTechnical */
+.responsive-grid-2col {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+@media (max-width: 900px) {
+  .responsive-grid-2col {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}
+
+/* Responsive grid for Floorplan */
+.responsive-grid-floorplan {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 32px;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .responsive-grid-floorplan {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}
+
+/* Sticky Header & Responsive Navigation Menu */
+.desktop-nav {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .desktop-nav {
+    display: none !important;
+  }
+}
+
+.mobile-menu-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: none;
+  padding: 8px;
+  transition: var(--transition-fast);
+}
+
+@media (max-width: 900px) {
+  .mobile-menu-btn {
+    display: block !important;
+  }
+}
+
+/* Footer layout responsiveness */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.8fr);
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+}
+
+/* Gallery layout overrides for mobile devices */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 240px;
+  gap: 16px;
+}
+
+.gallery-grid-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+}
+
+.gallery-grid-item-large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.lightbox-img {
+  max-width: 90% !important;
+  max-height: 75vh !important;
+  object-fit: contain;
+  transition: transform 0.25s ease-out;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.lightbox-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast) !important;
+  z-index: 5;
+}
+
+.lightbox-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.lightbox-nav-btn.left-btn {
+  left: 20px !important;
+}
+
+.lightbox-nav-btn.right-btn {
+  right: 20px !important;
+}
+
+@media (max-width: 600px) {
+  /* Full-width edge-to-edge gallery section on mobile */
+  .gallery-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .gallery-header, 
+  .gallery-filter-bar, 
+  .gallery-section .more-action-container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 250px !important; /* Make images beautifully tall and large */
+    gap: 8px !important;
+  }
+  
+  .gallery-grid-item {
+    border-radius: 0 !important; /* Edge to edge looks premium with square corners */
+    border-left: none !important;
+    border-right: none !important;
+  }
+  
+  .gallery-grid-item-large {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+  
+  /* Lightbox full-width images on mobile */
+  .lightbox-img {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 84vh !important;
+    object-fit: contain !important;
+  }
+  
+  .lightbox-thumbs-strip {
+    display: none !important;
+  }
+  
+  .lightbox-header {
+    padding: 8px 12px !important;
+  }
+  
+  .lightbox-nav-btn {
+    width: 44px !important;
+    height: 44px !important;
+    background: rgba(10, 11, 13, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .lightbox-nav-btn.left-btn {
+    left: 8px !important;
+  }
+  
+  .lightbox-nav-btn.right-btn {
+    right: 8px !important;
+  }
+}
+
+/* Typographic responsive adjustments */
+.responsive-kaltmiete-value {
+  font-size: clamp(24px, 7vw, 36px) !important;
+  font-weight: 700;
+  color: var(--accent-gold);
+  line-height: 1;
+}
+
+/* Energy Effiency visual scale fluid scaling */
+@media (max-width: 600px) {
+  .energy-scale-name {
+    font-size: 11px !important;
+  }
+  .energy-scale-range {
+    font-size: 7px !important;
+  }
+  .energy-active-indicator {
+    top: -28px !important;
+  }
+  .energy-indicator-label {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+  }
+}
+
+/* Responsive Table / Specs Lists */
+
+/* 1. Objekt- & Energiedaten spec-list */
+.spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14.5px;
+  color: var(--text-secondary);
+}
+
+.spec-label {
+  color: var(--text-muted);
+}
+
+.spec-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+@media (max-width: 600px) {
+  .spec-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .spec-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .spec-value {
+    text-align: left;
+    margin-left: 0;
+    margin-top: 2px;
+  }
+}
+
+/* 2. Floorplan rooms table */
+.floorplan-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.floorplan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 14.5px;
+  color: var(--text-secondary);
+}
+
+.floorplan-size {
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.floorplan-row.total-row {
+  padding: 16px 0;
+  border-top: 2px solid var(--accent-gold);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.floorplan-name.total-name {
+  font-weight: 700;
+}
+
+.floorplan-size.total-size {
+  font-size: 18px;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .floorplan-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 10px 0;
+  }
+
+  .floorplan-size {
+    text-align: left;
+    margin-left: 0;
+    margin-top: 2px;
+  }
+}
+
+/* 3. Pricing breakdown table */
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.price-label {
+  color: var(--text-secondary);
+}
+
+.price-value {
+  font-weight: 500;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.total-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.total-price-label {
+  font-weight: 700;
+}
+
+.total-price-value {
+  font-size: 20px;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding-bottom: 12px;
+  }
+
+  .price-value {
+    text-align: left;
+    margin-left: 0;
+    margin-top: 2px;
+  }
+
+  .total-price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+

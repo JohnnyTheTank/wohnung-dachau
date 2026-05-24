@@ -33,7 +33,8 @@ const images: GalleryImage[] = [
   { url: '/images/9f1e2436-1d84-4145-9feb-f68dc2c9838e.JPG', title: 'Details Einbauküche', category: 'kitchen' },
   { url: '/images/ab0dd1c1-4333-46ac-825a-214e348af35f.JPG', title: 'Wohnraum mit Vinylboden', category: 'living' },
   { url: '/images/d4ae2014-3593-4f73-81df-eaf061d0050a.JPG', title: 'Balkonaussicht ins Grüne', category: 'outdoor' },
-  { url: '/images/f34dcf2a-43ed-4c23-b656-eab0267d8970.JPG', title: 'Zimmer mit Aussicht', category: 'living' }
+  { url: '/images/f34dcf2a-43ed-4c23-b656-eab0267d8970.JPG', title: 'Zimmer mit Aussicht', category: 'living' },
+  { url: '/images/grundriss.png', title: 'Durchdachter Wohnungsgrundriss', category: 'general' }
 ];
 
 export const Gallery: React.FC = () => {
@@ -102,6 +103,7 @@ export const Gallery: React.FC = () => {
   // Touch handlers for swipe on mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX; // Reset to start position to prevent stale swipes on pure taps
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -119,13 +121,18 @@ export const Gallery: React.FC = () => {
     }
   };
 
+  // Prevent touch propagation from interactive controls to the background swipe container
+  const preventTouchPropagation = (e: React.TouchEvent) => {
+    e.stopPropagation();
+  };
+
   const togglePlay = () => setIsPlaying(!isPlaying);
   const zoomIn = () => setZoomScale(prev => Math.min(prev + 0.3, 3));
   const zoomOut = () => setZoomScale(prev => Math.max(prev - 0.3, 1));
 
   return (
     <section id="gallery" className="section gallery-section" style={styles.section}>
-      <div style={styles.header}>
+      <div className="gallery-header" style={styles.header}>
         <span style={styles.tag}>FOTOGALERIE</span>
         <h2 className="serif-heading" style={styles.title}>Einblicke in Ihr neues Zuhause</h2>
         <p style={styles.subtitle}>
@@ -135,7 +142,7 @@ export const Gallery: React.FC = () => {
       </div>
 
       {/* Categories Filter Bar */}
-      <div style={styles.filterBar}>
+      <div className="gallery-filter-bar" style={styles.filterBar}>
         <button 
           style={{ ...styles.filterBtn, ...(selectedFilter === 'all' ? styles.filterBtnActive : {}) }}
           onClick={() => setSelectedFilter('all')}
@@ -169,11 +176,12 @@ export const Gallery: React.FC = () => {
       </div>
 
       {/* Grid Display (showing up to 10 of filtered images first, with elegant hover) */}
-      <div style={styles.grid}>
+      <div className="gallery-grid" style={styles.grid}>
         {filteredImages.slice(0, 10).map((img, idx) => (
           <div 
             key={img.url} 
-            style={{ ...styles.gridItem, ...(idx === 0 || idx === 3 ? styles.gridItemLarge : {}) }}
+            className={idx === 0 || idx === 3 ? "gallery-grid-item gallery-grid-item-large" : "gallery-grid-item"}
+            style={styles.gridItem}
             onClick={() => openLightbox(img.url)}
           >
             <img 
@@ -194,7 +202,7 @@ export const Gallery: React.FC = () => {
 
       {/* Show more action card if there are more than 10 images */}
       {filteredImages.length > 10 && (
-        <div style={styles.moreActionContainer}>
+        <div className="more-action-container" style={styles.moreActionContainer}>
           <button className="btn btn-primary" onClick={() => openLightbox(filteredImages[10]?.url || filteredImages[0].url)}>
             Alle {filteredImages.length} Fotos in Galerie ansehen
           </button>
@@ -210,7 +218,13 @@ export const Gallery: React.FC = () => {
           onTouchEnd={handleTouchEnd}
         >
           {/* Top Panel */}
-          <div style={styles.lbHeader}>
+          <div 
+            className="lightbox-header"
+            style={styles.lbHeader}
+            onTouchStart={preventTouchPropagation}
+            onTouchMove={preventTouchPropagation}
+            onTouchEnd={preventTouchPropagation}
+          >
             <div style={styles.lbInfo}>
               <span style={styles.lbCount}>{lightboxIndex + 1} / {images.length}</span>
               <h4 style={styles.lbTitle}>{images[lightboxIndex].title}</h4>
@@ -233,16 +247,25 @@ export const Gallery: React.FC = () => {
           </div>
 
           {/* Left Arrow */}
-          <button style={{ ...styles.lbNavBtn, left: '20px' }} onClick={prevImage} title="Vorheriges Bild">
+          <button 
+            className="lightbox-nav-btn left-btn"
+            style={styles.lbNavBtn} 
+            onClick={prevImage}
+            onTouchStart={preventTouchPropagation}
+            onTouchMove={preventTouchPropagation}
+            onTouchEnd={preventTouchPropagation}
+            title="Vorheriges Bild"
+          >
             <ChevronLeft size={36} />
           </button>
 
           {/* Main Image Viewport */}
           <div style={styles.lbViewport} onClick={closeLightbox}>
             <img 
+              className="lightbox-img"
               src={getWebPUrl(images[lightboxIndex].url, '3x')} 
               srcSet={`${getWebPUrl(images[lightboxIndex].url, '1x')} 600w, ${getWebPUrl(images[lightboxIndex].url, '2x')} 1200w, ${getWebPUrl(images[lightboxIndex].url, '3x')} 2000w`} 
-              sizes="90vw"
+              sizes="100vw"
               alt={images[lightboxIndex].title} 
               style={{ 
                 ...styles.lbImg, 
@@ -253,12 +276,26 @@ export const Gallery: React.FC = () => {
           </div>
 
           {/* Right Arrow */}
-          <button style={{ ...styles.lbNavBtn, right: '20px' }} onClick={nextImage} title="Nächstes Bild">
+          <button 
+            className="lightbox-nav-btn right-btn"
+            style={styles.lbNavBtn} 
+            onClick={nextImage}
+            onTouchStart={preventTouchPropagation}
+            onTouchMove={preventTouchPropagation}
+            onTouchEnd={preventTouchPropagation}
+            title="Nächstes Bild"
+          >
             <ChevronRight size={36} />
           </button>
 
           {/* Bottom Thumbnails Strip for quick jumping */}
-          <div style={styles.lbThumbsStrip}>
+          <div 
+            className="lightbox-thumbs-strip"
+            style={styles.lbThumbsStrip}
+            onTouchStart={preventTouchPropagation}
+            onTouchMove={preventTouchPropagation}
+            onTouchEnd={preventTouchPropagation}
+          >
             {images.map((img, idx) => (
               <div 
                 key={`thumb-${img.url}`}
@@ -473,12 +510,7 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: 'center',
     transition: 'var(--transition-fast)',
     zIndex: 5,
-    '@media (max-width: 600px)': {
-      width: '44px',
-      height: '44px',
-      background: 'rgba(10, 11, 13, 0.6)'
-    }
-  } as any,
+  },
   lbViewport: {
     flexGrow: 1,
     width: '100%',

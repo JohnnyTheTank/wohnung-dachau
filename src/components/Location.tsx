@@ -109,12 +109,7 @@ export const Location: React.FC = () => {
 const styles: Record<string, React.CSSProperties> = {
   outerSection: {
     background: 'var(--bg-secondary)',
-    width: '100vw',
-    position: 'relative',
-    left: '50%',
-    right: '50%',
-    marginLeft: '-50vw',
-    marginRight: '-50vw',
+    width: '100%',
   },
   section: {
     maxWidth: '1200px',
@@ -264,7 +259,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   mapVisual: {
     position: 'relative',
-    height: '450px',
+    height: 'clamp(280px, 45vh, 450px)',
     background: 'var(--bg-secondary)',
     borderRadius: 'var(--border-radius-sm)',
     border: '1px solid var(--border-color)',

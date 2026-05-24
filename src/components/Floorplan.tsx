@@ -25,25 +25,24 @@ export const Floorplan: React.FC = () => {
         <div style={styles.divider} />
       </div>
 
-      <div style={styles.container}>
+      <div className="responsive-grid-floorplan" style={styles.container}>
         {/* Left Side: Room list table */}
         <div className="glass-card" style={styles.tableCard}>
           <h3 style={styles.cardTitle}>Flächenberechnung</h3>
           <p style={styles.cardDesc}>
             Dank des perfekten Schnitts der Wohnung wird jeder Quadratmeter optimal genutzt. Der getrennte Wohn- und Schlafbereich sorgt für ein ruhiges Wohngefühl.
           </p>
-          <div style={styles.table}>
+          <div className="floorplan-table">
             {rooms.map((room, idx) => (
               <div 
                 key={idx} 
+                className={`floorplan-row ${room.isTotal ? 'total-row' : ''}`}
                 style={{ 
-                  ...styles.row, 
-                  ...(room.isTotal ? styles.totalRow : {}),
                   borderBottom: idx === rooms.length - 1 ? 'none' : '1px solid var(--border-color)' 
                 }}
               >
-                <span style={room.isTotal ? { fontWeight: 700 } : {}}>{room.name}</span>
-                <span style={{ ...styles.sizeValue, ...(room.isTotal ? styles.totalValue : {}) }}>{room.size}</span>
+                <span className={`floorplan-name ${room.isTotal ? 'total-name' : ''}`}>{room.name}</span>
+                <span className={`floorplan-size ${room.isTotal ? 'total-size' : ''}`}>{room.size}</span>
               </div>
             ))}
           </div>
@@ -128,15 +127,7 @@ const styles: Record<string, React.CSSProperties> = {
     marginTop: '8px',
     borderRadius: '2px'
   },
-  container: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.1fr)',
-    gap: '32px',
-    alignItems: 'stretch',
-    '@media (max-width: 900px)': {
-      gridTemplateColumns: '1fr',
-    }
-  } as any,
+  container: {},
   tableCard: {
     display: 'flex',
     flexDirection: 'column',
@@ -154,34 +145,6 @@ const styles: Record<string, React.CSSProperties> = {
     lineHeight: '1.6',
     color: 'var(--text-secondary)',
     margin: 0
-  },
-  table: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '10px'
-  },
-  row: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '12px 0',
-    fontSize: '14.5px',
-    color: 'var(--text-secondary)'
-  },
-  sizeValue: {
-    fontWeight: 500,
-    color: 'var(--text-primary)'
-  },
-  totalRow: {
-    padding: '16px 0',
-    borderTop: '2px solid var(--accent-gold)',
-    color: 'var(--text-primary)',
-    fontWeight: 700
-  },
-  totalValue: {
-    fontSize: '18px',
-    color: 'var(--accent-gold)',
-    fontWeight: 700
   },
   planCard: {
     display: 'flex',

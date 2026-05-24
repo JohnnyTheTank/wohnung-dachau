@@ -39,18 +39,18 @@ export const EnergyTechnical: React.FC = () => {
         <div style={styles.divider} />
       </div>
 
-      <div style={styles.container}>
+      <div className="responsive-grid-2col" style={styles.container}>
         {/* Left Side: Technical facts list */}
         <div className="glass-card" style={styles.specsCard}>
           <div style={styles.specsHeader}>
             <FileText size={22} style={{ color: 'var(--accent-gold)' }} />
             <h3 style={styles.cardTitle}>Objekt- & Energiedaten</h3>
           </div>
-          <div style={styles.specsList}>
+          <div className="spec-list">
             {technicalSpecs.map((spec, idx) => (
-              <div key={idx} style={styles.specRow}>
-                <span style={styles.specLabel}>{spec.label}</span>
-                <span style={styles.specValue}>{spec.value}</span>
+              <div key={idx} className="spec-row">
+                <span className="spec-label">{spec.label}</span>
+                <span className="spec-value">{spec.value}</span>
               </div>
             ))}
           </div>
@@ -78,12 +78,12 @@ export const EnergyTechnical: React.FC = () => {
                   ...(cls.active ? styles.activeSegment : {}) 
                 }}
               >
-                <span style={styles.scaleName}>{cls.name}</span>
-                <span style={styles.scaleRange}>{cls.range}</span>
+                <span className="energy-scale-name" style={styles.scaleName}>{cls.name}</span>
+                <span className="energy-scale-range" style={styles.scaleRange}>{cls.range}</span>
                 {cls.active && (
-                  <div style={styles.activeIndicator}>
+                  <div className="energy-active-indicator" style={styles.activeIndicator}>
                     <div style={styles.indicatorPin} />
-                    <span style={styles.indicatorLabel}>Unser Objekt (144,3)</span>
+                    <span className="energy-indicator-label" style={styles.indicatorLabel}>Unser Objekt (144,3)</span>
                   </div>
                 )}
               </div>
@@ -139,16 +139,7 @@ const styles: Record<string, React.CSSProperties> = {
     marginTop: '8px',
     borderRadius: '2px'
   },
-  container: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)',
-    gap: '32px',
-    alignItems: 'stretch',
-    marginTop: '40px',
-    '@media (max-width: 900px)': {
-      gridTemplateColumns: '1fr',
-    }
-  } as any,
+  container: {},
   specsCard: {
     display: 'flex',
     flexDirection: 'column',
@@ -167,25 +158,6 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 600,
     color: 'var(--text-primary)',
     margin: 0
-  },
-  specsList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '14px'
-  },
-  specRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontSize: '14.5px',
-    color: 'var(--text-secondary)'
-  },
-  specLabel: {
-    color: 'var(--text-muted)'
-  },
-  specValue: {
-    fontWeight: 600,
-    color: 'var(--text-primary)'
   },
   energyCard: {
     display: 'flex',

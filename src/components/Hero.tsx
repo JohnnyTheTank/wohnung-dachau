@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, Sparkles, MapPin } from 'lucide-react';
 
 const heroImages = [
-  `${import.meta.env.BASE_URL}images/13aa8e10-884e-4c89-834d-d8c426283d91_2x.webp`,
-  `${import.meta.env.BASE_URL}images/5ce46b82-a4cb-4f14-b19b-93e096c36471_2x.webp`,
-  `${import.meta.env.BASE_URL}images/25247a78-def0-4dd1-ae0f-7d3e776d679b_2x.webp`,
-  `${import.meta.env.BASE_URL}images/b52503f2-bdc2-4b72-85e2-f2ee6cd1952c_2x.webp`
+  `${import.meta.env.BASE_URL}images/13aa8e10-884e-4c89-834d-d8c426283d91_3x.webp`,
+  `${import.meta.env.BASE_URL}images/5ce46b82-a4cb-4f14-b19b-93e096c36471_3x.webp`,
+  `${import.meta.env.BASE_URL}images/25247a78-def0-4dd1-ae0f-7d3e776d679b_3x.webp`,
+  `${import.meta.env.BASE_URL}images/b52503f2-bdc2-4b72-85e2-f2ee6cd1952c_3x.webp`
 ];
 
 export const Hero: React.FC = () => {
@@ -16,7 +16,7 @@ export const Hero: React.FC = () => {
       setCurrentBg((prev) => (prev + 1) % heroImages.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, []);
+  }, [currentBg]); // Reset interval timer when user manually switches slides
 
   const scrollToNext = () => {
     const nextSection = document.getElementById('key-facts');
@@ -32,13 +32,14 @@ export const Hero: React.FC = () => {
           key={img}
           style={{
             ...styles.bgSlide,
-            backgroundImage: `linear-gradient(to bottom, rgba(10, 11, 13, 0.4), rgba(10, 11, 13, 0.85)), url(${img})`,
+            backgroundImage: `linear-gradient(to bottom, rgba(10, 11, 13, 0.2), rgba(10, 11, 13, 0.55)), url(${img})`,
             opacity: currentBg === idx ? 1 : 0,
             transform: currentBg === idx ? 'scale(1.05)' : 'scale(1.0)',
           }}
         />
       ))}
 
+      {/* Main minimal and elegant hero overlay */}
       <div className="animate-fade-in-up" style={styles.content}>
         <div style={styles.badge}>
           <Sparkles size={14} style={{ color: 'var(--accent-gold)' }} />
@@ -55,22 +56,27 @@ export const Hero: React.FC = () => {
           <span>Richard-Strauß-Weg 6, 85221 Dachau</span>
         </div>
 
-        <p style={styles.subtitle}>
-          Erstklassige 3-Zimmer-Wohnung auf 70,1 m² • Stilvolle Einbauküche inklusive • Großer Süd-Balkon mit Blick ins Grüne • Eigener Tiefgaragen-Stellplatz
-        </p>
-
-        <div style={styles.tagsContainer}>
-          <span style={styles.tag}>70,1 m² Wohnfläche</span>
-          <span style={styles.tag}>3 helle Zimmer</span>
-          <span style={styles.tag}>Edler Vinylboden</span>
-          <span style={styles.tag}>1.425 € Kaltmiete</span>
-        </div>
-
         <div style={styles.actions}>
           <a href="#gallery" className="btn btn-primary" style={styles.ctaBtn}>
             Galerie ansehen
           </a>
         </div>
+      </div>
+
+      {/* Elegant, interactive slideshow dot navigation */}
+      <div style={styles.dotsContainer}>
+        {heroImages.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentBg(idx)}
+            style={{
+              ...styles.dot,
+              background: currentBg === idx ? 'var(--accent-gold)' : 'rgba(255, 255, 255, 0.35)',
+              width: currentBg === idx ? '24px' : '8px',
+            }}
+            aria-label={`Bild ${idx + 1} anzeigen`}
+          />
+        ))}
       </div>
 
       <div style={styles.scrollDown} onClick={scrollToNext}>
@@ -148,29 +154,6 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'rgba(255, 255, 255, 0.9)',
     fontWeight: 500,
   },
-  subtitle: {
-    fontSize: 'clamp(14px, 2vw, 17px)',
-    lineHeight: 1.6,
-    color: 'rgba(255, 255, 255, 0.8)',
-    maxWidth: '650px',
-    margin: '0 auto',
-  },
-  tagsContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '12px',
-    margin: '8px 0',
-  },
-  tag: {
-    background: 'rgba(191, 161, 95, 0.15)',
-    border: '1px solid rgba(191, 161, 95, 0.3)',
-    color: 'var(--accent-gold)',
-    padding: '6px 14px',
-    borderRadius: '100px',
-    fontSize: '13px',
-    fontWeight: 500,
-  },
   actions: {
     display: 'flex',
     gap: '16px',
@@ -181,10 +164,23 @@ const styles: Record<string, React.CSSProperties> = {
   ctaBtn: {
     boxShadow: '0 8px 30px rgba(191, 161, 95, 0.4)',
   },
-  galleryBtn: {
-    color: '#ffffff',
-    borderColor: 'rgba(255, 255, 255, 0.4)',
-    background: 'rgba(255, 255, 255, 0.05)',
+  dotsContainer: {
+    position: 'absolute',
+    bottom: '110px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 3,
+    display: 'flex',
+    gap: '8px',
+    alignItems: 'center',
+  },
+  dot: {
+    height: '8px',
+    borderRadius: '4px',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+    padding: 0,
   },
   scrollDown: {
     position: 'absolute',
